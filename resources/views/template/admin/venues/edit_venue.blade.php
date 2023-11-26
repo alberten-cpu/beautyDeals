@@ -110,7 +110,7 @@
                                   add-class=""
                                   :options="\App\Models\DealCategory::categoryAsArray()"
                                   required
-                                  :value="$venue->suburb"/>
+                                  :value="$venue->suburb->id"/>
                 @foreach($venue->timing as $timing)
                     <div class="form-group fieldGroup">
                         <div class="input-group">

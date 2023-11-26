@@ -36,7 +36,7 @@ class DealCategoryDataTable extends DataTable
                                 'Delete' =>
                                     [
                                         'class' => 'dropdown-item delete-button',
-                                        'attributes' => "data-bs-toggle=modal data-bs-target=#delete-popup data-action=" . route('categories.destroy', $query->dealCategoryId)
+                                        'attributes' => "data-bs-toggle=modal data-bs-target=#delete-popup data-action=" . route('categories.destroy', $query->categoryId)
                                     ]
                             ]
                         ]
