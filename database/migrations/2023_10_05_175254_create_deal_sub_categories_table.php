@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('dealSubCategoryStatus')->default(true);
             $table->timestamps();
             $table->foreign('dealCategoryId')
-                ->references('dealCategoryId')
+                ->references('categoryId')
                 ->on('deal_category')
                 ->onDelete('cascade');
         });
