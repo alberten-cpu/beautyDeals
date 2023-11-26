@@ -11,32 +11,37 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <x-admin.title-and-breadcrumb title="Edit Venue"
-                                      breadcrumbs='{"Home":"dashboard","Suburbs":"suburbs.index","Edit Suburb":""}'/>
+                                      breadcrumbs='{"Home":"dashboard","Venues":"venues.index","Edit Venue":""}'/>
         <!-- /.content-header -->
 
-        <x-admin.ui.card-form title="Vendor Details" form-route="suburbs.update" form-id="edit_suburb" enctype form-route-id="{{ $suburb->id }}">
+        <x-admin.ui.card-form title="Vendor Details" form-route="suburbs.update" form-id="edit_customer" enctype form-route-id="{{ $suburb->id }}">
             <x-slot name="input">
                 <div class="mb-3">
                     <x-admin.ui.bootstrap-switch name="status" id="status" label="Status" onText="Active"
-                                                 offText="Inactive" :value="$venue->venueStatus"/>
+                                                 offText="Inactive" :value="$suburb->status"/>
                 </div>
                 <x-admin.ui.input label="Suburb" type="text" name="suburb" id="suburb" add-class=""
                                   placeholder="" required :value="$suburb->suburb"/>
                 <x-admin.ui.input label="Latitude"
-                                type="text"
-                                name="latitude"
-                                id="latitude"
-                                add-class=""
-                                :value="$suburb->latitude"
-                                required/>
+                                  type="text"
+                                  name="latitude"
+                                  id="latitude"
+                                  add-class=""
+                                  :value="$suburb->latitude"
+                                  required/>
+                <x-admin.ui.input label="Longitude"
+                                  type="text"
+                                  name="longitude"
+                                  id="longitude"
+                                  add-class=""
+                                  :value="$suburb->latitude"
+                                  required/>
+            </x-slot>
+            <x-slot name="button">
+                <x-admin.ui.button type="submit" btn-name="Submit" name="customer_submit" id="customer_submit"/>
+            </x-slot>
+        </x-admin.ui.card-form>
 
-                <x-admin.ui.select label="Longitude"
-                                type="text"
-                                name="longitude"
-                                id="longitude"
-                                add-class=""
-                                :value="$suburb->longitude"
-                                required/>
         <!-- /.content -->
         @push('scripts')
             {{-- Custom JS --}}

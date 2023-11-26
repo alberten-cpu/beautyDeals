@@ -69,9 +69,10 @@ class SuburbController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Suburb $suburb): View|Factory|Application
+    public function edit(Suburb $suburb)
     {
-        return view('template.admin.venues.edit_venue', compact('suburb'));
+        //dd($suburb);
+        return view('template.admin.suburbs.edit_suburb', compact('suburb'));
     }
 
     /**
@@ -81,10 +82,10 @@ class SuburbController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Suburb $suburb): RedirectResponse
+    public function update(Request $request, Suburb $suburb)
     {
         $request->validate([
-            'suburb' => ['required','string', 'unique:suburbs'],
+            'suburb' => ['required','string'],
             'latitude' => ['required', 'numeric'],
             'longitude' => ['required', 'numeric'],
         ]);
@@ -92,8 +93,8 @@ class SuburbController extends Controller
         $suburb->suburb = $request->suburb;
         $suburb->latitude = $request->latitude;
         $suburb->longitude = $request->longitude;
-        $suburb->status = $request->status;
-
+        //dd($request->all());
+        $suburb->status = boolval($request->status);
         $suburb->save();
         return back()->with('success', 'Updated  successfully');
 
