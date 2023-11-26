@@ -1,0 +1,38 @@
+{
+    "name": "cwsps154/bootstrap-ui-components",
+    "description": "Help to build ui elements with bootstrap using laravel components",
+    "version": "2.0.184",
+    "keywords": [
+        "laravel",
+        "blade",
+        "components",
+        "form",
+        "bootstrap",
+        "ui"
+    ],
+    "type": "library",
+    "require": {
+        "php": "^7.4|^8.0|^8.1|^8.2",
+        "laravel/framework": "^8.0|^9.0|^10.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CWSPS154",
+            "email": "codewithsps154@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "CWSPS154\\BootstrapUiComponents\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CWSPS154\\BootstrapUiComponents\\BootstrapUiComponentsServiceProvider"
+            ]
+        }
+    }
+}
