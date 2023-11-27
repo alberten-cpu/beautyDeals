@@ -122,7 +122,7 @@
                                               id="otime"
                                               add-class=""
                                               required
-                                              value="{{ old('otime', '9:30') }}"/>
+                                              value="{{ old('otime', '09:30') }}"/>
                             <x-admin.ui.input label="Closing Time"
                                               type="time"
                                               name="ctime[]"
@@ -165,7 +165,7 @@
                                       name="otime[]"
                                       id="otime"
                                       add-class=""
-                                      value="{{ old('otime', '9:30') }}"/>
+                                      value="{{ old('otime', '09:30') }}"/>
                     <x-admin.ui.input label="Closing Time"
                                       type="time"
                                       name="ctime[]"
