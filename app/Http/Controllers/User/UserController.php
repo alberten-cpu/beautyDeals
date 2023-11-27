@@ -146,7 +146,7 @@ class UserController extends Controller
                 'suburb' => $endUser->suburb,
                 'dateOfBirth' => $endUser->dateOfBirth,
                 'email' => $endUser->user->email,
-                'imagePath' => $endUser->userImages->first()->imagePath,
+                'imagePath' => optional($endUser->userImages->first())->imagePath,
                 ];
         if ($endUser) {
 
