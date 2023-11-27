@@ -158,7 +158,6 @@ if (!function_exists('getCurrentOpenVenues')) {
     {
         $viewVenuesHelper = viewVenuesHelper();
         $currentTime = Carbon::now()->toTimeString();
-        $carbonCurrentTime = Carbon::parse($currentTime);
         $currentDayOfWeek = strtolower(Carbon::now()->format('l'));
         $openVenues = [];
         $venues = Venues::whereIn('venueId', $viewVenuesHelper)
@@ -166,9 +165,9 @@ if (!function_exists('getCurrentOpenVenues')) {
         foreach ($venues as $venue) {
             foreach ($venue->timing as $timing) {
                 if ($currentDayOfWeek === $timing->day) {
-                    $carbonOpenTime = Carbon::parse($timing->openTime);
-                    $carbonCloseTime = Carbon::parse($timing->closeTime);
-                    if ($carbonCurrentTime->gte($carbonOpenTime) && $carbonCurrentTime->lte($carbonCloseTime)) {
+                    $openTime = strtotime($timing->openTime);
+                    $closeTime = strtotime($timing->closeTime);
+                    if ($currentTime >= $openTime && $currentTime <= $closeTime ) {
                         $openVenues[] = $venue->venueId;
                     }
                 }
