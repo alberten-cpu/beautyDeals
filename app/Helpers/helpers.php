@@ -157,7 +157,6 @@ if (!function_exists('getCurrentOpenVenues')) {
     {
         $viewVenuesHelper = viewVenuesHelper();
         $currentTime = date("H:i:s");
-
         $currentDayOfWeek = strtolower(Carbon::now()->format('l'));
         $openVenues = [];
         $venues = Venues::whereIn('venueId', $viewVenuesHelper)
