@@ -36,7 +36,7 @@
                                   name="category"
                                   id="category"
                                   add-class="category"
-                                  :options="['restaurant'=>'Restaurant','bar'=>'Bar','cafe'=>'Cafe']"
+                                  :options="['Beauty Parlour'=>'Beauty Parlour','Spa'=>'Spa','Saloon'=>'Saloon']"
                                   required/>
                 <x-admin.ui.textarea label="Vendor bio / blurb"
                                   type="text"
