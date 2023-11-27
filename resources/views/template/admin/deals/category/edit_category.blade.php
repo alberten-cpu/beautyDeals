@@ -15,7 +15,7 @@
                                                  offText="Inactive" :value="$category->categoryStatus"/>
                 </div>
                 <x-admin.ui.input label="Category name" type="text" name="category_name" id="category_name" add-class=""
-                                  placeholder="" required :value="$category->dealCategoryName"/>
+                                  placeholder="" required :value="$category->categoryName"/>
             </x-slot>
             <x-slot name="button">
                 <x-admin.ui.button type="submit" btn-name="Submit" name="category_submit" id="category_submit"/>
