@@ -79,7 +79,7 @@ class VenuesDataTable extends DataTable
             Column::make('venueType')
                 ->title(__('Type'))
                 ->width(50),
-            Column::make('venuePlaceName')
+            Column::make('placeName')
                 ->title(__('Venue Place'))
                 ->width(50),
             Column::make('venueStatus')
