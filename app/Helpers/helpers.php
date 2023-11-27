@@ -98,8 +98,7 @@ function saveImages(Request $request, $imageName, $destinationPath)
 {
     $uploadedImage = $request->file($imageName);
     $paths = [];
-    foreach ($uploadedImage as $images)
-    {
+    foreach ($uploadedImage as $images) {
         $fileName = uniqid() . time() . '.png';
         $images->move($destinationPath, $fileName);
         $paths[] = $fileName;
@@ -157,7 +156,8 @@ if (!function_exists('getCurrentOpenVenues')) {
     function getCurrentOpenVenues(): array
     {
         $viewVenuesHelper = viewVenuesHelper();
-        $currentTime = Carbon::now()->toTimeString();
+        $currentTime = date("H:i:s");
+
         $currentDayOfWeek = strtolower(Carbon::now()->format('l'));
         $openVenues = [];
         $venues = Venues::whereIn('venueId', $viewVenuesHelper)
@@ -165,9 +165,11 @@ if (!function_exists('getCurrentOpenVenues')) {
         foreach ($venues as $venue) {
             foreach ($venue->timing as $timing) {
                 if ($currentDayOfWeek === $timing->day) {
-                    $openTime = strtotime($timing->openTime);
-                    $closeTime = strtotime($timing->closeTime);
-                    if ($currentTime >= $openTime && $currentTime <= $closeTime ) {
+                    $openTime = $timing->openTime;
+                    $closeTime = $timing->closeTime;
+
+                    if (strtotime($currentTime) >= strtotime($openTime) && strtotime($currentTime) <= strtotime($closeTime)) {
+                        echo "Venue is open.";
                         $openVenues[] = $venue->venueId;
                     }
                 }
@@ -281,7 +283,5 @@ if (!function_exists('categoryDeals')) {
 
         return $filterDeals;
     }
-
-
 
 }
