@@ -28,6 +28,9 @@ class Venues extends Model
         'phone_number',
         'venueAddress',
         'suburbId',
+        'placeName',
+        'latitude',
+        'longitude',
         'venueStatus',
     ];
 

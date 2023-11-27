@@ -113,6 +113,9 @@ class VenueController extends Controller
                 'venueWebsite' => $request->website,
                 'venueAddress' => $request->address,
                 'suburbId' => $request->suburb,
+                'placeName' => $request->placename,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
                 'venueStatus' => $request->has('status'),
             ]);
             $days = $request->day;
@@ -223,11 +226,11 @@ class VenueController extends Controller
             $venue->venueName = $request->name;
             $venue->venueDescription = $request->description;
             $venue->venueType = $request->category;
-            $venue->venuePlaceName = $request->place_name;
+            $venue->placeName = $request->placename;
             $venue->venueWebsite = $request->website;
             $venue->venueAddress = $request->address;
-            $venue->venueLatitude = $request->latitude;
-            $venue->venueLongitude = $request->longitude;
+            $venue->latitude = $request->latitude;
+            $venue->longitude = $request->longitude;
             $venue->venueStatus = $request->has('status');
             $venue->save();
             if ($venue->timing()->exists())

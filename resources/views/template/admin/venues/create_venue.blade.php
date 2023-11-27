@@ -91,6 +91,24 @@
                                   id="suburb"
                                   required
                                   :options="\App\Models\Suburb::suburbAsArray()" />
+                <x-admin.ui.input label="Place Name"
+                                     type="text"
+                                     name="placename"
+                                     id="placename"
+                                     add-class=""
+                                     required/>
+                <x-admin.ui.input label="Latitude"
+                                     type="text"
+                                     name="latitude"
+                                     id="latitude"
+                                     add-class=""
+                                     required/>
+                <x-admin.ui.input label="Longitude"
+                                     type="text"
+                                     name="longitude"
+                                     id="longitude"
+                                     add-class=""
+                                     required/>
 
                 <div class="form-group fieldGroup">
                     <div class="input-group">
@@ -106,14 +124,16 @@
                                               id="otime"
                                               add-class=""
                                               required
-                                              value="{{ old('otime', '09:30') }}" />
+                                              {{-- value="{{ old('otime', '09:30') }}" --}}
+                                              />
                             <x-admin.ui.input label="Closing Time"
                                               type="time"
                                               name="ctime[]"
                                               id="ctime"
                                               add-class=""
                                               required
-                                              value="{{ old('ctime', '17:30') }}" />
+                                              {{-- value="{{ old('ctime', '17:30') }}" --}}
+                                               />
 
                         </div>
                         <div class="mt-4 pt-2">
@@ -151,13 +171,15 @@
                                       name="otime[]"
                                       id="otime"
                                       add-class=""
-                                      value="{{ old('otime', '09:30') }}"/>
+                                      {{-- value="{{ old('otime', '09:30') }}" --}}
+                                      />
                     <x-admin.ui.input label="Closing Time"
                                       type="time"
                                       name="ctime[]"
                                       id="ctime"
                                       add-class=""
-                                      value="{{ old('ctime', '17:30') }}"/>
+                                      {{-- value="{{ old('ctime', '17:30') }}" --}}
+                                      />
                             <div class="mt-4 pt-2">
 								<a href="javascript:void(0)" class="btn btn-danger remove" style="min-width: 50px; float: right;">
                                     <span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> remove</a>

@@ -31,14 +31,13 @@
                                   add-class=""
                                   :value="$venue->user->email"
                                   required/>
-
                 <x-admin.ui.select label="Type of venue"
                                    type="text"
                                    name="category"
                                    id="category"
                                    add-class="category"
                                    :value="$venue->venueType"
-                                   :options="['restaurant'=>'Restaurant','bar'=>'Bar','cafe'=>'Cafe']"
+                                   :options="['Beauty Parlour'=>'Beauty Parlour','Spa'=>'Spa','Saloon'=>'Saloon']"
                                    required/>
                 <x-admin.ui.textarea label="Vendor bio / blurb"
                                      type="text"
@@ -103,14 +102,37 @@
                                   multiple="true"
                                   accept="image/png, image/gif, image/jpeg"
                                   />
-                <x-admin.ui.select label="Select Category"
-                                  type="text"
-                                  name="category"
-                                  id="category"
-                                  add-class=""
-                                  :options="\App\Models\DealCategory::categoryAsArray()"
+                <x-admin.ui.select label="Suburb"
+                                  name="suburb"
+                                  id="suburb"
                                   required
-                                  :value="$venue->suburb->id"/>
+                                  :options="\App\Models\Suburb::suburbAsArray()"
+                                  :value="$venue->suburb->id"
+                                  />
+                <x-admin.ui.input label="Place Name"
+                                  type="text"
+                                  name="placename"
+                                  id="placename"
+                                  add-class=""
+                                  required
+                                  :value="$venue->placeName"
+                                  />
+                <x-admin.ui.input label="Latitude"
+                                  type="text"
+                                  name="latitude"
+                                  id="latitude"
+                                  add-class=""
+                                  required
+                                  :value="$venue->latitude"
+                                  />
+                <x-admin.ui.input label="Longitude"
+                                  type="text"
+                                  name="longitude"
+                                  id="longitude"
+                                  add-class=""
+                                  required
+                                  :value="$venue->longitude"
+                                  />
                 @foreach($venue->timing as $timing)
                     <div class="form-group fieldGroup">
                         <div class="input-group">
