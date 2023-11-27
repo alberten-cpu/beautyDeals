@@ -114,9 +114,9 @@ class CategoryController extends Controller
                     ->with(
                         [
                             'delete_confirm' => true,
-                            'delete_confirm_id' => $category->dealCategoryId,
+                            'delete_confirm_id' => $category->categoryId,
                             'delete_confirm_message' => __('This category is associated with some Deals/SubCategories, please confirm to delete'),
-                            'delete_confirm_url' => route('categories.destroy', $category->dealCategoryId),
+                            'delete_confirm_url' => route('categories.destroy', $category->categoryId),
                         ]);
             }
             $category->delete();

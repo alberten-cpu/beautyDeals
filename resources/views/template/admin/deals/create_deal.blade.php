@@ -121,13 +121,15 @@
                                               name="otime[]"
                                               id="otime"
                                               add-class=""
-                                              required/>
+                                              required
+                                              value="{{ old('otime', '10:00') }}"/>
                             <x-admin.ui.input label="Closing Time"
                                               type="time"
                                               name="ctime[]"
                                               id="ctime"
                                               add-class=""
-                                              required/>
+                                              required
+                                              value="{{ old('ctime', '20:00') }}"/>
 
                         </div>
                         <div class="mt-4 pt-2 no-never">
@@ -162,12 +164,14 @@
                                       type="time"
                                       name="otime[]"
                                       id="otime"
-                                      add-class=""/>
+                                      add-class=""
+                                      value="{{ old('otime', '10:00') }}"/>
                     <x-admin.ui.input label="Closing Time"
                                       type="time"
                                       name="ctime[]"
                                       id="ctime"
-                                      add-class=""/>
+                                      add-class=""
+                                      value="{{ old('otime', '20:00') }}"/>
                     <div class="mt-4 pt-2">
                         <a href="javascript:void(0)" class="btn btn-danger remove"
                            style="min-width: 50px; float: right;">
