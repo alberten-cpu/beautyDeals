@@ -83,12 +83,12 @@ class CategoryController extends Controller
     public function update(Request $request, DealCategory $category): RedirectResponse
     {
         $request->validate([
-        'category_name' => ['string', 'required', 'min:3', 'unique:deal_category,dealCategoryName,'.$category->dealCategoryId.',dealCategoryId']
+        'category_name' => ['string', 'required', 'min:3', 'unique:deal_category,categoryName,'.$category->categoryId.',categoryId']
         ]);
         DB::beginTransaction();
         try {
-            $category->dealCategoryName = $request->category_name;
-            $category->dealCategoryStatus = $request->has('status');
+            $category->categoryName = $request->category_name;
+            $category->categoryStatus = $request->has('status');
             $category->save();
             DB::commit();
             return back()->with('success', 'Deal category updated successfully');
