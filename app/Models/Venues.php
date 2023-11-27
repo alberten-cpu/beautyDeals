@@ -104,7 +104,7 @@ class Venues extends Model
      * @param $userId
      * @return Venues
      */
-    public static function getVenueByUserId($userId): Venues
+    public static function geVenueByUserId($userId): Venues
     {
         return Venues::where('userId',$userId)->firstOrFail();
     }
