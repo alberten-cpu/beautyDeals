@@ -424,7 +424,7 @@ class UserController extends Controller
             ->with('user', 'images', 'timing')
             ->get();
         if ($venues) {
-            $deals = Deals::with('dealImages', 'dealRepeat')->where('venueId', $venueId)
+            $deals = Deals::with('dealImages', 'dealRepeat','dealCategory','dealsubCategory')->where('venueId', $venueId)
                 ->get();
             return response()->json([
                 'status' => 200,
