@@ -268,15 +268,9 @@ if (!function_exists('filterByParams')) {
     function filterByParams(array $searchParams): array
     {
         $filterDeals = [];
-        $conditions = $searchParams;
         $currentopenDeals = getCurrentOpenDeals();
-        $deals = Deals::with('venue')->whereIn('dealId', $currentopenDeals)
-            ->where(function ($query) use ($conditions) {
-                foreach ($conditions as $field => $value) {
-                    $query->where($field, $value);
-                }
-            })
-            ->get();
+        $deals = Deals::with('venue')->whereIn('dealId', $currentopenDeals)->get();
+        dd($deals);
         foreach ($deals as $deal) {
 
             $filterDeals[] = $deal->dealId;
