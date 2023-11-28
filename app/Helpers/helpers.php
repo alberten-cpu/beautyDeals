@@ -267,16 +267,5 @@ if (!function_exists('getCurrentOpenVenuesHasDeal')) {
 if (!function_exists('filterByParams')) {
     function filterByParams(array $searchParams): array
     {
-        $filterDeals = [];
-        $currentopenDeals = getCurrentOpenDeals();
-        $deals = Deals::with('venue')->whereIn('dealId', $currentopenDeals)->get();
-        dd($deals);
-        foreach ($deals as $deal) {
-
-            $filterDeals[] = $deal->dealId;
-        }
-
-        return $filterDeals;
-    }
 
 }
