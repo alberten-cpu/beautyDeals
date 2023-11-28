@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('view-venues/{params}', [UserController::class, 'viewVenues']);
         Route::get('filter-venues/{filterValue}', [UserController::class, 'filterVenues']);
         Route::post('filter-deals', [UserController::class, 'filterDeal']);
+        Route::get('delete-account/{userId}', [UserController::class, 'removeAccount']);
         Route::get('deals/{dealId}', [UserController::class, 'viewEachDeal']);
         Route::get('venues/{venueId}', [UserController::class, 'viewEachVenue']);
         Route::get('deal/view-all-categories', [CategoryControllr::class, 'viewCategories']);

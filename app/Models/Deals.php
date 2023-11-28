@@ -67,16 +67,19 @@ class Deals extends Model
         return $this->hasMany(DealImages::class,'dealId', 'dealId');
     }
 
-    public function category(): BelongsTo
+    public function venue(): BelongsTo
+    {
+        return $this->belongsTo(Venues::class, 'venueId', 'venueId');
+    }
+    public function dealCategory(): BelongsTo
     {
         return $this->belongsTo(DealCategory::class, 'category', 'categoryId');
     }
 
-    public function subCategory(): BelongsTo
+    public function dealsubCategory(): BelongsTo
     {
-        return $this->belongsTo(DealSubCategory::class, 'subCategory', 'dealCategoryId');
+        return $this->belongsTo(DealSubCategory::class, 'subCategory', 'dealSubCategoryId');
     }
-
     /**
      * @param $venueId
      * @return mixed
