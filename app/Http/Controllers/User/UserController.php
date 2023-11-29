@@ -371,7 +371,7 @@ class UserController extends Controller
         $deals = filterByParams($searchParams);
         if ($deals) {
             $deals = Deals::whereIn('dealId', $deals)->with('dealImages', 'dealRepeat','venue','dealCategory','dealsubCategory','venue.suburb')->get();
-            
+
             return response()->json([
                 'status' => 200,
                 'success' => true,
@@ -446,7 +446,7 @@ class UserController extends Controller
 
         }
     }
-    
+
     public function removeAccount($userId)
     {
         $user = User::with('endUser', 'images')->where('userId', $userId)->first();
@@ -485,5 +485,5 @@ class UserController extends Controller
         }
 
     }
-    
+
 }
