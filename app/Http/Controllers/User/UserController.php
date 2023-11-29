@@ -141,13 +141,13 @@ class UserController extends Controller
     {
         $endUser = EndUser::with('user', 'userimages')->where('userId', '=', $userId)->first();
         $data = [
-            'userId' => $endUser->userId,
-            'name' => $endUser->name,
-            'suburb' => $endUser->suburb,
-            'dateOfBirth' => $endUser->dateOfBirth,
-            'email' => $endUser->user->email,
-            'imagePath' => optional($endUser->userImages->first())->imagePath,
-        ];
+                'userId' => $endUser->userId,
+                'name' => $endUser->name,
+                'suburb' => $endUser->suburb,
+                'dateOfBirth' => $endUser->dateOfBirth,
+                'email' => $endUser->user->email,
+                'imagePath' => optional($endUser->userImages->first())->imagePath,
+                ];
         if ($endUser) {
 
             return response()->json([
@@ -181,34 +181,34 @@ class UserController extends Controller
             ]);
         }
 
-        if (isset($request->name)) {
+        if(isset($request->name)){
 
             $endUser->name = $request->name;
         }
-        if (isset($request->suburb)) {
+        if(isset($request->suburb)){
 
             $endUser->suburb = $request->suburb;
         }
-        if (isset($request->dateOfBirth)) {
+        if(isset($request->dateOfBirth)){
 
             $endUser->dateOfBirth = $request->dateOfBirth;
         }
 
         if (isset($request->newPassword)) {
 
-            if (Hash::check($request->oldPassword, $endUser->$user->password)) {
+            if (Hash::check($request->oldPassword, $endUser->$user->password)){
 
                 $endUser->$user->password = $request->newPassword;
                 $endUser->save();
                 $message = 'updated sucessfully';
 
-            } else {
+            }else{
 
                 return response()->json([
-                    'status' => 404,
-                    'success' => false,
-                    'msg' => 'Old password is incorrect',
-                ]);
+                'status' => 404,
+                'success' => false,
+                'msg' => 'Old password is incorrect',
+            ]);
             }
 
         }
@@ -249,7 +249,7 @@ class UserController extends Controller
                 'dateOfBirth' => $endUser->dateOfBirth,
                 'email' => $endUser->user->email,
                 'imagePath' => $endUser->userImages->first()->imagePath,
-            ];
+                ];
             return response()->json([
                 'status' => 200,
                 'success' => true,
@@ -292,21 +292,21 @@ class UserController extends Controller
     }
     public function viewVenues($params)
     {
-        if ($params == 0) {
+        if($params == 0){
 
             $venues = viewVenuesHelper();
-        } elseif ($params == 1) {
+        }elseif($params == 1){
 
             $venues = getCurrentOpenVenues();
-        } elseif ($params == 2) {
+        }elseif($params == 2){
 
             $venues = getCurrentOpenVenuesHasDeal();
-        } else {
+        }else{
 
             $venues = '';
         }
 
-        $venues = Venues::whereIn('venueId', $venues)->with('user', 'images', 'timing', 'suburb')->get();
+        $venues = Venues::whereIn('venueId', $venues)->with('user', 'images','timing','suburb')->get();
         if ($venues) {
 
             return response()->json([
@@ -370,7 +370,7 @@ class UserController extends Controller
         $searchParams = $request->all();
         $deals = filterByParams($searchParams);
         if ($deals) {
-            $deals = Deals::whereIn('dealId', $deals)->with('dealImages', 'dealRepeat', 'venue', 'dealCategory', 'dealsubCategory', 'venue.suburb')->get();
+            $deals = Deals::whereIn('dealId', $deals)->with('dealImages', 'dealRepeat','venue','dealCategory','dealsubCategory','venue.suburb')->get();
 
             return response()->json([
                 'status' => 200,
@@ -425,7 +425,7 @@ class UserController extends Controller
             ->get();
         if ($venues) {
             $deals = Deals::with('dealImages', 'dealRepeat','dealCategory','dealsubCategory')->where('venueId', $venueId)
-                ->get();
+            ->get();
             return response()->json([
                 'status' => 200,
                 'success' => true,
@@ -446,6 +446,7 @@ class UserController extends Controller
 
         }
     }
+
     public function removeAccount($userId)
     {
         $user = User::with('endUser', 'images')->where('userId', $userId)->first();
