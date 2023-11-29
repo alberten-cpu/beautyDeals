@@ -26,8 +26,12 @@
                                                                   "target":"0","new":"0","count":"0"},
                                                                   {"label":"Deal SubCategory","route":"sub_categories.index",
                                                                   "target":"0","new":"0","count":"0"}]'/>
+                    <x-admin.ui.menu name="Products" route="product.index" icon="fas fa-handshake" target="0"
+                                                                  new="0" count="0"/>
                 @elseif(auth()->user()->isUser())
                     <x-admin.ui.menu name="Deals" route="deals.index" icon="fas fa-handshake" target="0"
+                                     new="0" count="0"/>
+                    <x-admin.ui.menu name="Products" route="products.index" icon="fas fa-handshake" target="0"
                                      new="0" count="0"/>
                 @endif
             </ul>
