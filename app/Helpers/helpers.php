@@ -155,111 +155,178 @@ if (!function_exists('viewVenuesHelper')) {
 if (!function_exists('getCurrentOpenVenues')) {
     function getCurrentOpenVenues(): array
     {
-        
-}
-if (!function_exists('getCurrentOpenDeals')) {
-    function getCurrentOpenDeals(): array
-    {
-        $getCurrentOpenVenues = getCurrentOpenVenues();
-        $viewDealsHelper = viewDealsHelper(0);
-        $currentOpenDeals = [];
-        $isRepeatDeals1 = [];
-        $isRepeatDeals2 = [];
-        $isRepeatDeals3 = [];
+        $viewVenuesHelper = viewVenuesHelper();
+        $currentTime = date("H:i:s");
+
         $currentDayOfWeek = strtolower(Carbon::now()->format('l'));
-        $currentTime = Carbon::now()->toTimeString();
-        $carbonCurrentTime = Carbon::parse($currentTime);
-        $currentDate = Carbon::now()->toDateString();
-        $carbonCurrentDate = Carbon::parse($currentDate);
-        $currentWeekNumber = Carbon::now()->weekOfYear;
-        $deals = Deals::whereIn('dealId', $viewDealsHelper)->whereIn('venueId', $getCurrentOpenVenues)
-            ->where('status', true)->with('dealRepeat')->get();
+        $openVenues = [];
+        $venues = Venues::whereIn('venueId', $viewVenuesHelper)
+            ->with('user', 'timing')->get();
+        foreach ($venues as $venue) {
+            foreach ($venue->timing as $timing) {
+                if ($currentDayOfWeek === $timing->day) {
+                    $openTime = $timing->openTime;
+                    $closeTime = $timing->closeTime;
 
-        foreach ($deals as $deal) {
-            foreach ($deal->dealRepeat as $timing) {
-                $dealRepeatStartDate = Carbon::parse($deal->startDate);
-                $dealRepeatendDate = Carbon::parse($deal->repeatEndDate);
-                $carbonOpenTime = Carbon::parse($timing->sTime);
-                $carbonCloseTime = Carbon::parse($timing->eTime);
-                if ($carbonCurrentDate->gte($dealRepeatStartDate) && $carbonCurrentDate->lte($dealRepeatendDate)) {
-
-                    if ($deal->isRepeat == 1) {
-
-                        if ($currentDayOfWeek === $deal->dealRepeat->repeat) {
-                            if ($carbonCurrentTime->gte($carbonOpenTime) && $carbonCurrentTime->lte($carbonCloseTime)) {
-                                $isRepeatDeals1[] = $deal->dealRepeat->dealId;
-                            }
-                        }
-
+                    if (strtotime($currentTime) >= strtotime($openTime) && strtotime($currentTime) <= strtotime($closeTime)) {
+                        $openVenues[] = $venue->venueId;
                     }
-                    if ($deals->isRepeat == 2) {
-                        $repeatWeeks = explode("-", $deal->repeatWeeks);
-                        if (in_array($currentWeekNumber, $repeatWeeks)) {
-                            if ($currentDayOfWeek === $deal->dealRepeat->repeat) {
-                                if ($carbonCurrentTime->gte($carbonOpenTime) && $carbonCurrentTime->lte($carbonCloseTime)) {
-                                    $isRepeatDeals2[] = $deal->dealRepeat->dealId;
-                                }
-                            }
-
-                        }
-
-                    }
-                    if ($deals->isRepeat == 3) {
-
-                        $carbonDealDate = Carbon::parse($deal->dealRepeat->repeat);
-                        if ($carbonCurrentDate->equalTo($carbonDealDate)) {
-                            if ($carbonCurrentTime->gte($carbonOpenTime) && $carbonCurrentTime->lte($carbonCloseTime)) {
-                                $isRepeatDeals3[] = $deal->dealRepeat->dealId;
-                            }
-                        }
-
-                    }
-
                 }
             }
+        }
+        return $openVenues;
+    }
+}
 
+if (!function_exists('getCurrentOpenDeals')) {
+    function isDateBetween($dateToCheck, $startDate, $endDate) {
+        $dateToCheck = new DateTime($dateToCheck);
+        $startDate = new DateTime($startDate);
+        $endDate = new DateTime($endDate);
+    
+        return ($dateToCheck >= $startDate && $dateToCheck <= $endDate);
+    }
+}
+
+if (!function_exists('getCurrentOpenDeals')) {
+        function getCurrentOpenDeals(): array
+        {
+            $getCurrentOpenVenues = getCurrentOpenVenues();
+            $viewDealsHelper = viewDealsHelper(0);
+            
+            $currentOpenDeals = [];
+            $isRepeatDeals1 = [];
+            $isRepeatDeals2 = [];
+            $isRepeatDeals3 = [];
+    
+            $currentDayOfWeek = strtolower((new DateTime())->format('l'));
+            $currentTime = (new DateTime())->format('H:i:s');
+            $currentDate = (new DateTime())->format('Y-m-d');
+            $currentWeekNumber = (new DateTime())->format('W');
+    
+            $deals = Deals::whereIn('dealId', $viewDealsHelper)->whereIn('venueId', $getCurrentOpenVenues)
+                ->where('status', true)->with('dealRepeat')->get();
+            foreach ($deals as $deal) {
+                foreach ($deal->dealRepeat as $timing) {
+                    $dealStartDate = $deal->startDate;
+                    $dealEndDate = $deal->repeatEndDate;
+                    $dealOpenTime = $timing->sTime;
+                    $dealCloseTime = $timing->eTime;
+                    if (isDateBetween($currentDate, $dealStartDate, $dealEndDate)) {
+                        if ($currentDayOfWeek === $timing->repeat) {
+                           
+                            if ($deal->isRepeat == 1) {
+                                    if (strtotime($currentTime) >= strtotime($dealOpenTime) && strtotime($currentTime) <= strtotime($dealCloseTime)) {
+                                         $isRepeatDeals1[] = $timing->dealId;
+                                    }
+                            }
+                            if ($deal->isRepeat == 2) {
+                                $repeatWeeks = explode("-", $deal->repeatWeeks);
+                                if (in_array($currentWeekNumber, $repeatWeeks)) {
+                                    if (strtotime($currentTime) >= strtotime($dealOpenTime) && strtotime($currentTime) <= strtotime($dealCloseTime)) {
+                                        $isRepeatDeals2[] = $timing->dealId;
+                                    }
+                                }
+                            }
+                    }
+                    if ($deal->isRepeat == 3) {
+                        $carbonDealDate = $timing->repeat;
+                        if ($currentDate === $carbonDealDate) {
+                                if (strtotime($currentTime) >= strtotime($dealOpenTime) && strtotime($currentTime) <= strtotime($dealCloseTime)) {
+                                        $isRepeatDeals3[] = $timing->dealId;
+                                }
+                            }
+    
+                        }
+                }
+    
+            }
+    
         }
         $mergedArray = array_merge($isRepeatDeals1, $isRepeatDeals2, $isRepeatDeals3);
         $currentOpenDeals = array_unique($mergedArray);
         return $currentOpenDeals;
-
     }
 }
 
 if (!function_exists('getCurrentOpenVenuesHasDeal')) {
     function getCurrentOpenVenuesHasDeal(): array
     {
+        $openVenues = getCurrentOpenVenues();
         $openDeals = getCurrentOpenDeals();
         $openVenueshasDeal = [];
-        $deals = Deals::whereIn('dealId', $openDeals)->get();
+        $deals = Deals::whereIn('venueId', $openVenues)->whereIn('dealId', $openDeals)->where('status',true)->get();
         foreach ($deals as $deal) {
-
-            $openVenues[] = $deal->venueId;
+            $openVenueshasDeal[] = $deal->venueId;
         }
-
         return $openVenueshasDeal;
     }
 
 }
 
-if (!function_exists('categoryDeals')) {
-    function filterByParams(array $searchParams): array
-    {
-        $filterDeals = [];
-        $conditions = $searchParams;
-        $currentopenDeals = getCurrentOpenDeals();
-        $deals = Deals::whereIn('dealId', $currentopenDeals)
-            ->where(function ($query) use ($conditions) {
-                foreach ($conditions as $field => $value) {
-                    $query->where($field, $value);
+if (!function_exists('filterByParams')) {
+        function filterByParams(array $searchParams): array
+        {
+            $filterDeals = [];
+            $categoryDeals = [];
+            $subCategoryDeals = [];
+            $priceDeals = [];
+            $suburbDeals = [];
+        
+            $currentopenDeals = getCurrentOpenDeals();
+            $deals = Deals::with('dealCategory', 'venue', 'venue.suburb', 'dealsubCategory')
+                ->whereIn('dealId', $currentopenDeals)
+                ->get();
+        
+            foreach ($deals as $deal) {
+                // Check if the category matches
+                if (
+                    isset($searchParams['category'])
+                    && $searchParams['category'] !== null
+                    && $searchParams['category'] !== 'all'
+                ) {
+                    if ($deal->dealCategory->categoryName === $searchParams['category']) {
+                        $categoryDeals[] = $deal->dealId;
+                    }
+                } else {
+                    $categoryDeals[] = $deal->dealId;
                 }
-            })
-            ->get();
-        foreach ($deals as $deal) {
-
-            $filterDeals[] = $deal->dealId;
-        }
-
+        
+                // Check if the subcategory matches
+                if (
+                    isset($searchParams['subCategory'])
+                    && $searchParams['subCategory'] !== null
+                    && $searchParams['subCategory'] !== 'all'
+                ) {
+                    if ($deal->dealsubCategory->dealSubCategoryName === $searchParams['subCategory']) {
+                        $subCategoryDeals[] = $deal->dealId;
+                    }
+                } else {
+                    $subCategoryDeals[] = $deal->dealId;
+                }
+        
+                // Check if the price is greater than or equal
+                if (isset($searchParams['price']) && $searchParams['price'] !== null) {
+                    if ($deal->price <= $searchParams['price']) {
+                        $priceDeals[] = $deal->dealId;
+                    }
+                } else {
+                    $priceDeals[] = $deal->dealId;
+                }
+        
+                // Check if the suburb matches either placeName or suburb in the venue
+                if (isset($searchParams['suburb']) && $searchParams['suburb'] !== null) {
+                    if ($deal->venue->placeName === $searchParams['suburb'] || $deal->venue->suburb === $searchParams['suburb']) {
+                        $suburbDeals[] = $deal->dealId;
+                    }
+                } else {
+                    $suburbDeals[] = $deal->dealId;
+                }
+            }
+        
+            // Get deals that satisfy all conditions
+            $filterDeals = array_intersect($categoryDeals, $subCategoryDeals, $priceDeals, $suburbDeals);
+        
         return $filterDeals;
     }
 

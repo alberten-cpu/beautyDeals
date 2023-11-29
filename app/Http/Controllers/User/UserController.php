@@ -181,9 +181,18 @@ class UserController extends Controller
             ]);
         }
 
-        $endUser->name = $request->name;
-        $endUser->suburb = $request->suburb;
-        $endUser->dateOfBirth = $request->dateOfBirth;
+        if(isset($request->name)){
+
+            $endUser->name = $request->name;
+        }
+        if(isset($request->suburb)){
+
+            $endUser->suburb = $request->suburb;
+        }
+        if(isset($request->dateOfBirth)){
+
+            $endUser->dateOfBirth = $request->dateOfBirth;
+        }
 
         if (isset($request->newPassword)) {
 
@@ -358,10 +367,11 @@ class UserController extends Controller
 
     public function filterDeal(Request $request)
     {
-        $deals = filterByParams($request->input('searchParams'));
+        $searchParams = $request->all();
+        $deals = filterByParams($searchParams);
         if ($deals) {
-            $deals = Deals::whereIn('dealId', $deals)->with('dealImages', 'dealRepeat')->get();
-
+            $deals = Deals::whereIn('dealId', $deals)->with('dealImages', 'dealRepeat','venue','dealCategory','dealsubCategory','venue.suburb')->get();
+            
             return response()->json([
                 'status' => 200,
                 'success' => true,
@@ -414,7 +424,7 @@ class UserController extends Controller
             ->with('user', 'images', 'timing')
             ->get();
         if ($venues) {
-            $deals = Deals::with('dealImages','dealRepeat')->where('venueId', $venueId)
+            $deals = Deals::with('dealImages', 'dealRepeat','dealCategory','dealsubCategory')->where('venueId', $venueId)
             ->get();
             return response()->json([
                 'status' => 200,
@@ -436,4 +446,44 @@ class UserController extends Controller
 
         }
     }
+    
+    public function removeAccount($userId)
+    {
+        $user = User::with('endUser', 'images')->where('userId', $userId)->first();
+
+        if ($user) {
+            // Delete related "endUser" records if it's a collection
+            if ($user->endUser instanceof \Illuminate\Database\Eloquent\Collection) {
+                $user->endUser->each->delete();
+            } elseif ($user->endUser) {
+                // Delete a single "endUser" if it's a model instance
+                $user->endUser->delete();
+            }
+
+            // Delete related "images" records if it's a collection
+            if ($user->images instanceof \Illuminate\Database\Eloquent\Collection) {
+                $user->images->each->delete();
+            } elseif ($user->images) {
+                // Delete a single "images" record if it's a model instance
+                $user->images->delete();
+            }
+
+            // Delete the user
+            $user->delete();
+
+            return response()->json([
+                'status' => 200,
+                'success' => true,
+                'msg' => 'User Deleted Successfully',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'success' => false,
+                'msg' => 'User not found',
+            ], 404);
+        }
+
+    }
+    
 }

@@ -71,7 +71,15 @@ class Deals extends Model
     {
         return $this->belongsTo(Venues::class, 'venueId', 'venueId');
     }
+    public function dealCategory(): BelongsTo
+    {
+        return $this->belongsTo(DealCategory::class, 'category', 'categoryId');
+    }
 
+    public function dealsubCategory(): BelongsTo
+    {
+        return $this->belongsTo(DealSubCategory::class, 'subCategory', 'dealSubCategoryId');
+    }
     /**
      * @param $venueId
      * @return mixed
