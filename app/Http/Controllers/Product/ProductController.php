@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
+use App\Http\Controllers\Controller;
 
 use App\DataTables\Admin\ProductDataTable;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('template.admin.product.create_product');
     }
 
     /**
@@ -35,7 +36,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required'],
+            'description' => ['required'],
+            'price' => ['required'],
+        ]);
     }
 
     /**
