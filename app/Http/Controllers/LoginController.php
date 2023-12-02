@@ -117,10 +117,8 @@ class LoginController extends Controller
             return response()->json([
                 'status' => 200,
                 'success' => true,
-                'msg' => 'changed sucessfully !!',
+                'msg' => 'New Password Sent to Email Sucessfully !!',
                 'password' => $password,
-                'data' => $user,
-
             ]);
 
         } else {
