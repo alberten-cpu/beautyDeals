@@ -1,8 +1,9 @@
 <?php
 
-
 namespace App\DataTables\Admin;
-use App\Models\Deals;
+
+use App\DataTables\Admin\DataTable;
+use App\Models\Product;
 use App\Models\Venues;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -11,7 +12,7 @@ use Yajra\DataTables\Html\Column;
 
 class ProductDataTable extends DataTable
 {
-    protected string $tableName = 'deals-table';
+    protected string $tableName = 'product-table';
 
     /**
      * Build the DataTable class.
@@ -36,20 +37,19 @@ class ProductDataTable extends DataTable
                                 'Delete' =>
                                     [
                                         'class' => 'dropdown-item delete-button',
-                                        'attributes' => "data-bs-toggle=modal data-bs-target=#delete-popup data-action=" . route('product.destroy', $query->dealId)
+                                        'attributes' => "data-bs-toggle=modal data-bs-target=#delete-popup data-action=" . route('product.destroy', $query->id)
                                     ]
                             ]
                         ]
                     );
             })
             ->rawColumns(['action']);
-
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Deals $model): QueryBuilder
+    public function query(Product $model): QueryBuilder
     {
         if(auth()->user()->isUser())
         {
