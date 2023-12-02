@@ -49,7 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('deals/{dealId}', [UserController::class, 'viewEachDeal']);
         Route::get('venues/{venueId}', [UserController::class, 'viewEachVenue']);
         Route::get('deal/view-all-categories', [CategoryControllr::class, 'viewCategories']);
-        Route::get('forgot-password', [LoginController::class, 'forgotPassword']);
+        Route::post('forgot-password', [LoginController::class, 'forgotPassword']);
 
 
 });

@@ -44,6 +44,7 @@ class DealsDataTable extends DataTable
                     );
             })
             ->rawColumns(['action']);
+
     }
 
     /**
