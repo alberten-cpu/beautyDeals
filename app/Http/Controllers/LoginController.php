@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\Users\ForgotPassword;
+use App\Mail\ForgotPassword;
 
 class LoginController extends Controller
 {
@@ -91,7 +91,7 @@ class LoginController extends Controller
         }
     }
 
-    public function forgotPassword(Request $request)
+    public function ForgotPassword(Request $request)
     {
         $mail = $request->email;
         $user = User::where('email', '=', $mail)->first();
