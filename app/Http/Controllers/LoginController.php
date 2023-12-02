@@ -97,7 +97,7 @@ class LoginController extends Controller
         $user = User::where('email', '=', $mail)->first();
         if ($user) {
 
-            function generateRandom($length = 5)
+            function generateRandom($length = 8)
             {
                 $possibleChars = '123456789ABCDEFGHJKMNPQRSTUVWXYZ';
 

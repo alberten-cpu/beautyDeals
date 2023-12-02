@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Product;
-use App\Http\Controllers\Controller;
 
 use App\DataTables\Admin\ProductDataTable;
+use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\ProductImages;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -41,6 +43,25 @@ class ProductController extends Controller
             'description' => ['required'],
             'price' => ['required'],
         ]);
+
+        $product = Product::create([
+            'venueId' => $request->venue,
+            'title' => $request->title,
+            'description' => $request->description,
+            'price' => $request->price,
+            'status' => $request->has('status'),
+        ]);
+        $destinationPath = createProductFolder($product->id);
+        $imagePaths = saveImages($request, 'image', $destinationPath);
+        foreach ($imagePaths as $imagePath) {
+            ProductImages::create([
+                'productId' => $product->id,
+                'imagePath' => $imagePath,
+                'imageType' => 'banner',
+                'status' => true,
+            ]);
+        }
+        return back()->with('success', 'Product created successfully');
     }
 
     /**

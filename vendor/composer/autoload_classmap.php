@@ -54,6 +54,7 @@ return array(
     'App\\Models\\Deals' => $baseDir . '/app/Models/Deals.php',
     'App\\Models\\EndUser' => $baseDir . '/app/Models/EndUser.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
+    'App\\Models\\ProductImages' => $baseDir . '/app/Models/ProductImages.php',
     'App\\Models\\Role' => $baseDir . '/app/Models/Role.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\UserImages' => $baseDir . '/app/Models/UserImages.php',
