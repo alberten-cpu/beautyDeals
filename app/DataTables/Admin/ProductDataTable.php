@@ -1,8 +1,7 @@
 <?php
 
-namespace App\DataTables\Admin\Deals;
 
-use App\DataTables\Admin\DataTable;
+namespace App\DataTables\Admin;
 use App\Models\Deals;
 use App\Models\Venues;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -10,7 +9,7 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 
-class DealsDataTable extends DataTable
+class ProductDataTable extends DataTable
 {
     protected string $tableName = 'deals-table';
 
@@ -94,7 +93,7 @@ class DealsDataTable extends DataTable
     {
         return [
             Button::make()
-                ->action("window.location = '" . route('deals.create') . "';")
+                ->action("window.location = '" . route('product.create') . "';")
                 ->text(__('Create'))
                 ->addClass('buttons-html5')
         ];
