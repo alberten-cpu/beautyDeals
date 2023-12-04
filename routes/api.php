@@ -6,6 +6,7 @@ use App\Http\Controllers\Venue\VenueController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Deal\CategoryController;
+use App\Http\Controllers\Product\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('venues/{venueId}', [UserController::class, 'viewEachVenue']);
         Route::get('deal/view-all-categories', [CategoryControllr::class, 'viewCategories']);
         Route::post('forgot-password', [LoginController::class, 'forgotPassword']);
-
+        Route::get('products', [ProductController::class, 'view']);
 
 });
 

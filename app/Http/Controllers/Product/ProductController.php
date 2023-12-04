@@ -108,4 +108,30 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function view()
+    {
+        $products = Product::with('productImages')->where('status',true)->get();
+        if ($products) {
+
+            return response()->json([
+                'status' => 200,
+                'success' => true,
+                'msg' => 'Products Found',
+                'data' => $products,
+
+            ]);
+
+        } else {
+
+            return response()->json([
+                'status' => 404,
+                'success' => false,
+                'msg' => 'Products Not Found',
+
+            ]);
+
+        }
+
+    }
 }
