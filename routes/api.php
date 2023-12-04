@@ -52,6 +52,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('deal/view-all-categories', [CategoryControllr::class, 'viewCategories']);
         Route::post('forgot-password', [LoginController::class, 'forgotPassword']);
         Route::get('products', [ProductController::class, 'view']);
+        Route::get('products/{id}', [ProductController::class, 'viewEach']);
 
 });
 
