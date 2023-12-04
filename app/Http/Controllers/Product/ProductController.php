@@ -111,7 +111,7 @@ class ProductController extends Controller
 
     public function view()
     {
-        $products = Product::with('productImages')->where('status',true)->get();
+        $products = Product::with('productImages','venue')->where('status',true)->get();
         if ($products) {
 
             return response()->json([
@@ -128,6 +128,32 @@ class ProductController extends Controller
                 'status' => 404,
                 'success' => false,
                 'msg' => 'Products Not Found',
+
+            ]);
+
+        }
+
+    }
+
+    public function viewEach($productId)
+    {
+        $products = Product::with('productImages','venue')->where('id','=',$productId)->get();
+        if ($products) {
+
+            return response()->json([
+                'status' => 200,
+                'success' => true,
+                'msg' => 'Product Found',
+                'data' => $products,
+
+            ]);
+
+        } else {
+
+            return response()->json([
+                'status' => 404,
+                'success' => false,
+                'msg' => 'Product Not Found',
 
             ]);
 
