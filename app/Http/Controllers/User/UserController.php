@@ -213,7 +213,7 @@ class UserController extends Controller
 
         }
 
-        if (isset($request->profileImage)) {
+        if ($request->profileImage !== null) {
             $destinationPath = public_path() . '/Users/' . $request->userId . '/';
             $image_no = mt_rand(100, 999); // or any other method to generate a unique number
             $image = $request->profileImage;

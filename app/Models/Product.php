@@ -28,6 +28,8 @@ class Product extends Model
         'title',
         'description',
         'price',
+        'startDate',
+        'endDate',
         'status',
     ];
 

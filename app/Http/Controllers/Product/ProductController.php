@@ -49,6 +49,8 @@ class ProductController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
+            'startDate' => $request->startDate,
+            'endDate' => $request->endDate,
             'status' => $request->has('status'),
         ]);
         $destinationPath = createProductFolder($product->id);
@@ -81,9 +83,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        $product->load(['productImages', 'venue']);
+        return view('template.admin.product.edit_product', compact('product'));
     }
 
     /**

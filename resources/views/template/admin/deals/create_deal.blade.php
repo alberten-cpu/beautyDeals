@@ -41,7 +41,7 @@
                                      name="description"
                                      id="description"
                                      add-class=""
-                                     maxlength="50"
+                                     maxlength="300"
                                      required/>
 
                 <x-admin.ui.select label="Select Category"
