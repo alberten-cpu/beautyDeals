@@ -1,5 +1,3 @@
-node_modules
+# .gitignore
 .env
-ENV/
-env/
-public
+public/
