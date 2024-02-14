@@ -34,7 +34,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::User()->isAdmin()) {
+        if (Auth::User()->isAdmin() || Auth::User()->isAdminUser()) {
             return $next($request);
         } else {
             if ($request->wantsJson()) {

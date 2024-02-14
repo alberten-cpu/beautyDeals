@@ -91,6 +91,12 @@
                                   id="suburb"
                                   required
                                   :options="\App\Models\Suburb::suburbAsArray()" />
+                <x-admin.ui.input label="Country"
+                                     type="text"
+                                     name="country"
+                                     id="country"
+                                     add-class=""
+                                     required/>
                 <x-admin.ui.input label="Place Name"
                                      type="text"
                                      name="placename"

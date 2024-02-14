@@ -24,6 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('suburbId');
             $table->boolean('venueStatus')->default(false);
             $table->timestamp('last_seen')->nullable();
+            $table->string('country');
             $table->string('placeName')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();

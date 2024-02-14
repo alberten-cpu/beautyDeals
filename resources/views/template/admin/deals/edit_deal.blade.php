@@ -22,7 +22,7 @@
                     <x-admin.ui.bootstrap-switch name="isExclusive" id="isExclusive" label="isExclusive" onText="Yes"
                                                  offText="No" required :value="$deal->isExclusive"/>
                 </div>
-                @if(auth()->user()->isAdmin())
+                @if(auth()->user()->isAdmin() || auth()->user()->isAdminUser())
                 <x-admin.ui.select label="Select Venue"
                                    type="text"
                                    name="venue"

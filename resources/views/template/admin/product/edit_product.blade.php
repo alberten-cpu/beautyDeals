@@ -20,7 +20,7 @@
                     <x-admin.ui.bootstrap-switch name="status" id="status" label="Status" onText="Active"
                                                  offText="Inactive" :value="$product->status"/>
                 </div>
-                @if(auth()->user()->isAdmin())
+                @if(auth()->user()->isAdmin() || auth()->user()->isAdminUser())
                 <x-admin.ui.select label="Select Venue"
                                    type="text"
                                    name="venue"

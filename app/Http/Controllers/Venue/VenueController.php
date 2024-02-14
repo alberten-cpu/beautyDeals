@@ -113,6 +113,7 @@ class VenueController extends Controller
                 'venueWebsite' => $request->website,
                 'venueAddress' => $request->address,
                 'suburbId' => $request->suburb,
+                'country' => strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $request->country)),
                 'placeName' => $request->placename,
                 'latitude' => $request->latitude,
                 'longitude' => $request->longitude,
@@ -226,6 +227,7 @@ class VenueController extends Controller
             $venue->venueName = $request->name;
             $venue->venueDescription = $request->description;
             $venue->venueType = $request->category;
+            $venue->country = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $request->country));
             $venue->placeName = $request->placename;
             $venue->venueWebsite = $request->website;
             $venue->venueAddress = $request->address;
@@ -520,14 +522,14 @@ class VenueController extends Controller
                 $venue->venueLatitude = $venueData['venueLatitude'];
                 $venue->venueLongitude = $venueData['venueLongitude'];
                 $message = 'User Details Updated Sucessfully';
-                
+
                 if($venueData['oldPassword'] != null) {
-                    
+
                     if (Hash::check($venueData['oldPassword'], $venue->user->password)) {
-                        
+
                         $venue->user->password = $venueData['newPassword'];
                         $message = 'User Details Updated Sucessfully with Password';
-                    
+
                     }else {
                         return response()->json([
                             'status' => 401,
@@ -538,7 +540,7 @@ class VenueController extends Controller
                 }
 
             }
-            
+
 
             if ($venue->isDirty() || $venue->user->isDirty()) {
 

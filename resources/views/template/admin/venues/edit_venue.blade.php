@@ -109,6 +109,14 @@
                                   :options="\App\Models\Suburb::suburbAsArray()"
                                   :value="$venue->suburb->id"
                                   />
+                <x-admin.ui.input label="Country"
+                                  type="text"
+                                  name="country"
+                                  id="country"
+                                  add-class=""
+                                  required
+                                  :value="$venue->country"
+                                  />
                 <x-admin.ui.input label="Place Name"
                                   type="text"
                                   name="placename"

@@ -100,4 +100,12 @@ class User extends Authenticatable
     {
         return $this->roleId == Role::getRoleId('end_user');
     }
+
+    /**
+     * @return bool
+     */
+    public function isAdminUser(): bool
+    {
+        return $this->roleId == Role::getRoleId('admin_user');
+    }
 }

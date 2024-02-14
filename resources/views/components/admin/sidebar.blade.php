@@ -33,6 +33,16 @@
                                      new="0" count="0"/>
                     <x-admin.ui.menu name="Products" route="product.index" icon="fas fa-handshake" target="0"
                                      new="0" count="0"/>
+                @elseif(auth()->user()->isAdminUser())
+                    <x-admin.ui.menu name="Venues" route="venues.index" icon="fas fa-location-arrow" target="0"
+                                    new="0" count="0"/>
+                    <x-admin.ui.menu name="Suburbs" route="suburbs.index" icon="fa fa-map-marker" target="0"
+                                    new="0" count="0"/>
+                    <x-admin.ui.dropdown-menu name="Deals" icon="fas fa-handshake"
+                                             menus='[{"label":"Deals","route":"deals.index",
+                                             "target":"0","new":"0","count":"0"}]'/>
+                    <x-admin.ui.menu name="Products" route="product.index" icon="fas fa-handshake" target="0"
+                                             new="0" count="0"/>
                 @endif
             </ul>
         </nav>

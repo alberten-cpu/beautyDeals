@@ -12,6 +12,7 @@ class Role extends Model
     public const ADMIN = 1;
     public const USER = 2;
     public const ENDUSER = 3;
+    public const ADMINUSER = 4;
 
     protected $table = 'roles';
 

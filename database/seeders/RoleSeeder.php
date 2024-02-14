@@ -34,5 +34,12 @@ class RoleSeeder extends Seeder
             'roleLevel' => 3,
             'status' => true,
         ]);
+
+        Role::create([
+            'role' => 'AdminUser',
+            'roleIdentifier' => 'admin_user',
+            'roleLevel' => 4,
+            'status' => true,
+        ]);
     }
 }
