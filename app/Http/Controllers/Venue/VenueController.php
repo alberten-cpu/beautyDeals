@@ -519,8 +519,26 @@ class VenueController extends Controller
                 $venue->venueAddress = $venueData['venueAddress'];
                 $venue->venueLatitude = $venueData['venueLatitude'];
                 $venue->venueLongitude = $venueData['venueLongitude'];
+                $message = 'User Details Updated Sucessfully';
+                
+                if($venueData['oldPassword'] != null) {
+                    
+                    if (Hash::check($venueData['oldPassword'], $venue->user->password)) {
+                        
+                        $venue->user->password = $venueData['newPassword'];
+                        $message = 'User Details Updated Sucessfully with Password';
+                    
+                    }else {
+                        return response()->json([
+                            'status' => 401,
+                            'success' => true,
+                            'msg' => 'Incorrect Current Password',
+                        ]);
+                    }
+                }
 
             }
+            
 
             if ($venue->isDirty() || $venue->user->isDirty()) {
 
@@ -532,7 +550,7 @@ class VenueController extends Controller
                 return response()->json([
                     'status' => 200,
                     'success' => true,
-                    'msg' => 'Updated Sucessfully',
+                    'msg' => $message,
                     'data' => $venue,
 
                 ]);

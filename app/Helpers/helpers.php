@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+
 
 function createUserFolder($userId)
 {
@@ -301,7 +303,7 @@ if (!function_exists('filterByParams')) {
             $deals = Deals::with('dealCategory', 'venue', 'venue.suburb', 'dealsubCategory')
                 ->whereIn('dealId', $currentopenDeals)
                 ->get();
-
+                
             foreach ($deals as $deal) {
                 // Check if the category matches
                 if (
@@ -309,7 +311,7 @@ if (!function_exists('filterByParams')) {
                     && $searchParams['category'] !== null
                     && $searchParams['category'] !== 'all'
                 ) {
-                    if ($deal->dealCategory->categoryName === $searchParams['category']) {
+                    if (Str::lower($deal->dealCategory->categoryName) === Str::lower($searchParams['category'])) {
                         $categoryDeals[] = $deal->dealId;
                     }
                 } else {
@@ -322,7 +324,7 @@ if (!function_exists('filterByParams')) {
                     && $searchParams['subCategory'] !== null
                     && $searchParams['subCategory'] !== 'all'
                 ) {
-                    if ($deal->dealsubCategory->dealSubCategoryName === $searchParams['subCategory']) {
+                    if (Str::lower($deal->dealsubCategory->dealSubCategoryName) === Str::lower($searchParams['subCategory'])) {
                         $subCategoryDeals[] = $deal->dealId;
                     }
                 } else {
@@ -340,7 +342,7 @@ if (!function_exists('filterByParams')) {
 
                 // Check if the suburb matches either placeName or suburb in the venue
                 if (isset($searchParams['suburb']) && $searchParams['suburb'] !== null) {
-                    if ($deal->venue->placeName === $searchParams['suburb'] || $deal->venue->suburb === $searchParams['suburb']) {
+                    if (Str::lower($deal->venue->placeName) === Str::lower($searchParams['suburb']) || Str::lower($deal->venue->suburb) === Str::lower($searchParams['suburb'])) {
                         $suburbDeals[] = $deal->dealId;
                     }
                 } else {

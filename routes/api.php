@@ -30,6 +30,7 @@ Route::prefix('/createVenue')->group(function () {
 
 Route::post('/login', [LoginController::class, 'loginUser']);
 Route::post('end-user/sign-up', [UserController::class, 'apiStore']); // Create profile
+Route::post('web-form', [LoginController::class, 'WebsiteMail']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -53,6 +54,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('forgot-password', [LoginController::class, 'forgotPassword']);
         Route::get('products', [ProductController::class, 'view']);
         Route::get('products/{id}', [ProductController::class, 'viewEach']);
+        
+
 
 });
 

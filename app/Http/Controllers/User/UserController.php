@@ -172,7 +172,6 @@ class UserController extends Controller
     public function apiUpdate(Request $request)
     {
         $endUser = EndUser::with('user', 'userImages')->where('userId', '=', $request->userId)->first();
-
         if (!$endUser) {
             return response()->json([
                 'status' => 500,
@@ -196,10 +195,10 @@ class UserController extends Controller
 
         if (isset($request->newPassword)) {
 
-            if (Hash::check($request->oldPassword, $endUser->$user->password)){
-
-                $endUser->$user->password = $request->newPassword;
+            if (Hash::check($request->oldPassword, $endUser->user->password)){
+                $endUser->user->password = Hash::make($request->newPassword);
                 $endUser->save();
+                $endUser->user->save();
                 $message = 'updated sucessfully';
 
             }else{
@@ -248,7 +247,6 @@ class UserController extends Controller
                 'suburb' => $endUser->suburb,
                 'dateOfBirth' => $endUser->dateOfBirth,
                 'email' => $endUser->user->email,
-                'imagePath' => $endUser->userImages->first()->imagePath,
                 ];
             return response()->json([
                 'status' => 200,

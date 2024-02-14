@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ForgotPassword;
+use App\Mail\WebMail;
+use App\Mail\WebMailToUser;
 
 class LoginController extends Controller
 {
@@ -127,6 +129,29 @@ class LoginController extends Controller
                 'status' => 401,
                 'success' => false,
                 'msg' => 'user not found !!',
+
+            ]);
+        }
+
+    }
+    
+    public function WebsiteMail(Request $request)
+    {
+        
+        if ($request !== null) {
+
+            $mail = 'sales@beauty.amj-tech.co.nz';
+            Mail::to($mail)->send(new WebMail($request));
+            Mail::to($request->email)->send(new WebMailtoUser());
+            return redirect('https://beauty.amj-tech.co.nz/index?mail=1');
+
+
+        } else {
+
+            return response()->json([
+                'status' => 401,
+                'success' => false,
+                'msg' => 'Please give input',
 
             ]);
         }

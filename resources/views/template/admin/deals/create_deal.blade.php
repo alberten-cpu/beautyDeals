@@ -41,7 +41,7 @@
                                      name="description"
                                      id="description"
                                      add-class=""
-                                     maxlength="50"
+                                     maxlength="300"
                                      required/>
 
                 <x-admin.ui.select label="Select Category"
@@ -66,6 +66,7 @@
                                   name="price"
                                   id="price"
                                   add-class=""
+                                  step="0.01"
                                   required/>
 
                 <x-admin.ui.select label="Repeat"

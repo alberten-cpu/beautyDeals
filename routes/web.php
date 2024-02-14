@@ -30,7 +30,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::group(['middleware' => 'admin'], function () {
         Route::resource('venues', VenueController::class)->except('show');
-        Route::resource('product', ProductController::class)->except('show');
         Route::resource('suburbs', SuburbController::class)->except('show');
         Route::group(['prefix' => 'deal'], function () {
             Route::resource('categories', CategoryController::class)->except('show');
@@ -39,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
             });
         });
     });
+    Route::resource('product', ProductController::class);
     Route::resource('deals', DealController::class);
 });
 

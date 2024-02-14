@@ -28,7 +28,18 @@ class Product extends Model
         'title',
         'description',
         'price',
+        'startDate',
+        'endDate',
         'status',
+    ];
+    
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'startDate' => 'datetime:Y-m-d',
+        'endDate' => 'datetime:Y-m-d',
+        'status' => 'boolean',
     ];
 
     public function productImages(): HasMany
